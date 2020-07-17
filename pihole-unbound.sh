@@ -25,6 +25,7 @@ install() {
 		curl -sSL https://install.pi-hole.net | bash
 	else
 		tput setaf 1; echo "This script needs has been written to run on Debian based distros. Quiting..."
+		exit 1
 	fi
 }
 
@@ -38,6 +39,7 @@ installdns() {
 	
 	else
 		tput setaf 1; echo "This script needs has been written to run on Debian based distros. Quiting..."
+		exit 1
 	fi
 }
 
@@ -49,6 +51,7 @@ configure() {
 		wget -O /var/lib/unbound/root.hints https://www.internic.net/domain/named.root 
 	else
 		tput setaf 1; echo "wget is not installed, please install wget and try to run the script again"
+		exit 1
 	fi
 
 	# Ask user for ipv4 or ipv6 configuration file for unbound
@@ -81,13 +84,13 @@ dns() {
 	if [[ $servfail == *"SERVFAIL"* ]]; then
 		tput setaf 2; echo "First DNS test completed successfully."
 	else
-		tput setaf 1; echo "DNS query returned unexpected result."
+		tput setaf 1; echo "First DNS query returned unexpected result."
 	fi
 
 	if [[ $noerror == *"NOERROR"* ]]; then
 		tput setaf 2; echo "Second DNS test completed successfully."
 	else
-		tput setaf 1; echo "DNS query returned unexpected result."
+		tput setaf 1; echo " Second DNS query returned unexpected result."
 	fi
 }
 
