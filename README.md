@@ -1,4 +1,4 @@
-# PiHole and Unbound DNS (with DNSSEC) setup
+# Pi-Bound installs and configures PiHole and Unbound to be your network's recursive DNS server.
 
 A simple script that installs PiHole, then automatically installs and configures Unbound to be your pihole's DNS server.
 
@@ -9,9 +9,9 @@ This script supports IPv4 as well as IPv6, you will be prompted during the scrip
 Run the following command on your Pi to download the script:
 
 ```
-wget -O pihole-unbound.sh https://raw.githubusercontent.com/kentishh/pihole_unbound/master/pihole-unbound.sh
-chmod +x pihole-unbound.sh
-sudo ./pihole-unbound.sh
+wget -O pi-bound.sh https://raw.githubusercontent.com/kentishh/pihole_unbound/master/pi-bound.sh
+chmod +x pi-bound.sh
+sudo ./pi-bound.sh
 ```
 ## Final steps
 
