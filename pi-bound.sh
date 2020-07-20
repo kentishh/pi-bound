@@ -55,7 +55,7 @@ configure() {
 	fi
 
 	# Ask user for ipv4 or ipv6 configuration file for unbound
-	read -p "Does your network utilise IPv6? (Y/N)" network
+	read -p "Do you want unbound to resolve IPv6 addresses? (Y/N)" network
 	if $network -eq "N" ; then
 		wget -O /etc/unbound/unbound.conf.d/pi-hole.conf https://raw.githubusercontent.com/kentishh/pihole_unbound/master/unbound-ipv4 
 	else
