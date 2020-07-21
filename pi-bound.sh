@@ -54,6 +54,10 @@ configure() {
 		exit 1
 	fi
 
+	# Create a monthly cronjob to get root hints
+	tput setaf 2; echo "Creating cron job to get root hints on a monthly basis..."
+	(crontab -l 2>/dev/null; echo "0 0 1 * * wget -O /var/lib/unbound/root.hints https://www.internic.net/domain/named.root") | crontab -
+
 	# Ask user for ipv4 or ipv6 configuration file for unbound
 	read -p "Do you want unbound to resolve IPv6 addresses? (Y/N)" network
 	if $network -eq "N" ; then
