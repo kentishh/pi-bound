@@ -24,7 +24,7 @@ install() {
 		tput setaf 2; echo "PiHole installation beginning..."
 		curl -sSL https://install.pi-hole.net | bash
 	else
-		tput setaf 1; echo "This script needs has been written to run on Debian based distros. Quiting..."
+		tput setaf 1; echo "This script has been written to run on Debian based distros. Quiting..."
 		exit 1
 	fi
 }
