@@ -38,7 +38,7 @@ installdns() {
 	       	apt install unbound wget -y > /dev/null
 	
 	else
-		tput setaf 1; echo "This script needs has been written to run on Debian based distros. Quiting..."
+		tput setaf 1; echo "This script has been written to run on Debian based distros. Quiting..."
 		exit 1
 	fi
 }
