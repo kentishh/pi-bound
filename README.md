@@ -4,6 +4,10 @@ A simple script that installs PiHole, then automatically installs and configures
 
 This script supports IPv4 as well as IPv6, you will be prompted during the script for your required configuration.
 
+## What if I already have PiHole installed?
+
+You will be prompted during the script to either install PiHole and Unbound (option 1), or to just install Unbound along with required configuration (option 2).
+
 ## How to run
 
 Run the following command on your Pi to download the script:
