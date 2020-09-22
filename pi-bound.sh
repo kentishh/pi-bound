@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Let's check the script is being run as root
 
 if [[ $EUID -ne 0 ]] ; then
@@ -18,7 +17,7 @@ is_command() {
 
 
 # Main install function, this installs pihole, unbound and wget which we use to get some config files
-install() {
+pihole_install() {
 	if is_command apt-get ; then
 		tput setaf 2; echo "Running Debian based distro, continuing..."
 		tput setaf 2; echo "PiHole installation beginning..."
@@ -29,14 +28,13 @@ install() {
 	fi
 }
 
-installdns() {
+dns_install() {
 	if is_command apt-get; then
-		# Install unbound and wget
+		# Install unbound 
 		tput setaf 2; echo "Updating repositories..."
 		apt update -y > /dev/null 
-		tput setaf 2; echo "Installing unbound and wget..."
-	       	apt install unbound wget -y > /dev/null
-	
+		tput setaf 2; echo "Installing unbound..." 
+	       	apt install unbound -y > /dev/null
 	else
 		tput setaf 1; echo "This script has been written to run on Debian based distros. Quiting..."
 		exit 1
@@ -46,14 +44,9 @@ installdns() {
 configure() {
 
 	# Get root hints file and move into unbound install directory
-	tput setaf 2; echo "Getting root hints for unbound..."
-	if is_command wget ; then
-		wget -O /var/lib/unbound/root.hints https://www.internic.net/domain/named.root 
-	else
-		tput setaf 1; echo "wget is not installed, please install wget and try to run the script again"
-		exit 1
-	fi
-
+	tput setaf 2; echo "Getting root hints..."
+	wget -O /var/lib/unbound/root.hints https://www.internic.net/domain/named.root 
+	
 	# Create a monthly cronjob to get root hints
 	tput setaf 2; echo "Creating cron job to get root hints on a monthly basis..."
 	(crontab -l 2>/dev/null; echo "0 0 1 * * wget -O /var/lib/unbound/root.hints https://www.internic.net/domain/named.root") | crontab -
@@ -64,7 +57,6 @@ configure() {
 		wget -O /etc/unbound/unbound.conf.d/pi-hole.conf https://raw.githubusercontent.com/kentishh/pihole_unbound/master/unbound-ipv4 
 	else
 		wget -O /etc/unbound/unbound.conf.d/pi-hole.conf https://raw.githubusercontent.com/kentishh/pihole_unbound/master/unbound-ipv6 
-
 	fi
 
 	# Start and enable unbound service
@@ -105,12 +97,12 @@ printf "What would you like to do? (enter a number and press enter) \n1) Install
 read answer
 
 if [ "$answer" == "1" ] ;then
-	install
-	installdns
+	pihole_install
+	dns_install
 	configure
 	dns
 else
-	installdns
+	dns_install
 	configure
 	dns
 fi
